@@ -229,9 +229,21 @@ void particiona(TNo *P, int d, int pos, int chave, TNo *pt) {
     P->m = d;
 }
 
+TLista *percorreAdd(TNo *no, int k, TLista *lista) {
+    if (no == NULL) return lista;
+
+    for (int x = 0; x < no->m; x++) {
+        lista = percorreAdd(no->p[x], k, lista);  
+
+        if (no->s[x] >= k) return lista;         
+        lista = insere_ordenado(lista, no->s[x]);
+    }
+    return percorreAdd(no->p[no->m], k, lista);   
+}
+
 TLista *menor_k(TNo *raiz, int k) {
     //TODO: Implementar essa funcao
-
+    return percorreAdd(raiz, k, NULL); 
 }
 
 int main(int argc, char *argv[]) {
